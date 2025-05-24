@@ -1,27 +1,27 @@
  StarkLinkPay
 
-starkLinkPay** is a decentralized wallet and Web3-native freelance platform built on StarkNet.  
+starkLinkPay is a decentralized wallet and Web3-native freelance platform built on StarkNet.  
 It enables seamless crypto payments, job-based escrow contracts, and link-based transactions — all within a non-custodial environment.
 
 
 
  ✨ What We're Building
 
-- Decentralized Wallet:** Non-custodial wallet built on StarkNet.
-- Payment Links & QR:** Send and receive crypto via link or QR code.
-- Freelance Jobs Tab:** A built-in marketplace for remote jobs using smart contract escrow.
-- TON → StarkNet Bridge:** Accept TON tokens and bridge to STRK on StarkNet.
-- Incentive System:** Airdrops for early users and testnet contributors.
+- Decentralized Wallet:Non-custodial wallet built on StarkNet.
+- Payment Links & QR:Send and receive crypto via link or QR code.
+- Freelance Jobs Tab: A built-in marketplace for remote jobs using smart contract escrow.
+- TON → StarkNet Bridge:Accept TON tokens and bridge to STRK on StarkNet.
+- Incentive System:Airdrops for early users and testnet contributors.
 
 
 
  🔧 Tech Stack
 
-- StarkNet** (Layer 2 on Ethereum)
-- Cairo** (for smart contracts)
-- StarkNet.js** (frontend integration)
+- StarkNet (Layer 2 on Ethereum)
+- Cairo (for smart contracts)
+- StarkNet.js (frontend integration)
 - React.js + TailwindCSS** (frontend UI)
-- Node.js or Laravel** (backend API)
+- Node.js or Laravel (backend API)
 - GitHub Actions** (CI/CD in future)
 
 ---
