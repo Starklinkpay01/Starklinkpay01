@@ -1,0 +1,1 @@
+{"version":1,"contracts":[{"id":"tvqfs4q9c95bi","package_name":"payment","contract_name":"Payment","module_path":"payment::payment::Payment","artifacts":{"sierra":"payment_Payment.contract_class.json","casm":"payment_Payment.compiled_contract_class.json"}}]}
