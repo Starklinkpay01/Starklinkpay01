@@ -1,11 +1,31 @@
-import React from 'react';
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import React from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 
 export default function JobTab() {
   const jobs = [
-    { title: 'Build landing page', price: '30 STRK' },
-    { title: 'Translate website', price: '15 STRK' },
+    {
+      title: "Build landing page",
+      price: "30 STRK",
+      description:
+        "Design and develop a responsive landing page for a product.",
+    },
+    {
+      title: "Translate website",
+      price: "15 STRK",
+      description: "Translate an existing website from English to French.",
+    },
   ];
+
+  const handleApply = (title: string) => {
+    Alert.alert("Job Applied", `You applied for "${title}"`);
+  };
 
   return (
     <View style={styles.container}>
@@ -14,7 +34,14 @@ export default function JobTab() {
         {jobs.map((job, idx) => (
           <View key={idx} style={styles.jobCard}>
             <Text style={styles.jobTitle}>{job.title}</Text>
+            <Text style={styles.jobDesc}>{job.description}</Text>
             <Text style={styles.jobPrice}>{job.price}</Text>
+            <TouchableOpacity
+              style={styles.applyButton}
+              onPress={() => handleApply(job.title)}
+            >
+              <Text style={styles.applyText}>Apply</Text>
+            </TouchableOpacity>
           </View>
         ))}
       </ScrollView>
@@ -25,13 +52,13 @@ export default function JobTab() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#001F3F',
+    backgroundColor: "#001F3F",
     paddingTop: 60,
   },
   header: {
     fontSize: 26,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
+    fontWeight: "bold",
+    color: "#FFFFFF",
     paddingHorizontal: 20,
     marginBottom: 20,
   },
@@ -40,11 +67,11 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   jobCard: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#0A1E3F",
     borderRadius: 12,
     padding: 20,
     marginBottom: 16,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 6,
@@ -52,13 +79,30 @@ const styles = StyleSheet.create({
   },
   jobTitle: {
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: "bold",
+    color: "#fff",
     marginBottom: 6,
-    color: '#001F3F',
+  },
+  jobDesc: {
+    color: "#ccc",
+    marginBottom: 10,
+    fontSize: 14,
   },
   jobPrice: {
     fontSize: 16,
-    fontWeight: '500',
-    color: '#FF416C',
+    fontWeight: "600",
+    color: "#00FF66",
+    marginBottom: 12,
+  },
+  applyButton: {
+    backgroundColor: "#FF416C",
+    paddingVertical: 12,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  applyText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 15,
   },
 });

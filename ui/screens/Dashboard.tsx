@@ -1,19 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { Modal } from "react-native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { getYieldBalance } from "../utils/payment.contract";
 
 type RootStackParamList = {
   ReceiveScreen: undefined;
+  JobTab: undefined;
+  Send: undefined;
+  FreelancerProfile: undefined;
+  GenerateLinkScreen: undefined;
 };
 
 export default function Dashboard() {
+  const [balance, setBalance] = useState<string>("...");
+  const [showProfileModal, setShowProfileModal] = useState(true);
+
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
@@ -41,6 +51,10 @@ export default function Dashboard() {
     },
   ];
 
+  useEffect(() => {
+    getYieldBalance().then(setBalance).catch(console.error);
+  }, []);
+
   return (
     <ScrollView style={styles.container}>
       {/* Header */}
@@ -64,15 +78,37 @@ export default function Dashboard() {
 
       {/* Dashboard Value */}
       <Text style={styles.dashboardTitle}>Dashboard</Text>
-      <Text style={styles.balance}>$1,250</Text>
+      <Text style={styles.balance}>${balance}</Text>
 
       {/* Action Buttons */}
       <View style={styles.actionsRow}>
-        {["Send", "Jobs", "Generate\nLink", "Receive"].map((label, i) => (
-          <TouchableOpacity key={i} style={styles.iconCircle}>
-            <Text style={styles.iconLabel}>{label}</Text>
-          </TouchableOpacity>
-        ))}
+        <TouchableOpacity
+          style={styles.iconCircle}
+          onPress={() => navigation.navigate("Send")}
+        >
+          <Text style={styles.iconLabel}>Send</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.iconCircle}
+          onPress={() => navigation.navigate("JobTab")}
+        >
+          <Text style={styles.iconLabel}>Jobs</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.iconCircle}
+          onPress={() => navigation.navigate("GenerateLinkScreen")}
+        >
+          <Text style={styles.iconLabel}>Generate{"\n"}Link</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.iconCircle}
+          onPress={() => navigation.navigate("ReceiveScreen")}
+        >
+          <Text style={styles.iconLabel}>Receive</Text>
+        </TouchableOpacity>
       </View>
 
       {/* Recent Activity */}
@@ -93,6 +129,37 @@ export default function Dashboard() {
           </View>
         ))}
       </View>
+      <Modal visible={showProfileModal} transparent animationType="slide">
+        <View style={styles.overlay}>
+          <View style={styles.modalBox}>
+            <Text style={styles.modalTitle}>Select Profile</Text>
+
+            <TouchableOpacity
+              style={styles.hireBtn}
+              onPress={() => {
+                setShowProfileModal(false);
+                navigation.navigate("JobTab");
+              }}
+            >
+              <Text style={styles.modalBtnText}>I Want To Hire</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.workBtn}
+              onPress={() => {
+                setShowProfileModal(false);
+                navigation.navigate("FreelancerProfile");
+              }}
+            >
+              <Text style={styles.modalBtnText}>I Want To Work</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => setShowProfileModal(false)}>
+              <Text style={styles.closeText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   );
 }
@@ -209,5 +276,55 @@ const styles = StyleSheet.create({
   amount: {
     fontSize: 14,
     fontWeight: "600",
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
+    justifyContent: "flex-end",
+  },
+
+  modalBox: {
+    backgroundColor: "#001F3F",
+    padding: 24,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    alignItems: "center",
+  },
+
+  modalTitle: {
+    color: "#fff",
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+
+  hireBtn: {
+    backgroundColor: "#FF6B6B",
+    paddingVertical: 14,
+    borderRadius: 12,
+    width: "100%",
+    alignItems: "center",
+    marginBottom: 12,
+  },
+
+  workBtn: {
+    borderColor: "#fff",
+    borderWidth: 1,
+    paddingVertical: 14,
+    borderRadius: 12,
+    width: "100%",
+    alignItems: "center",
+    marginBottom: 12,
+  },
+
+  modalBtnText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+
+  closeText: {
+    color: "#ccc",
+    marginTop: 10,
   },
 });
