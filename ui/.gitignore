@@ -1,0 +1,11 @@
+# Dependencies
+node_modules/
+
+# Expo
+.expo/
+.expo-shared/
+
+# Misc
+*.log
+.env
+.DS_Store
